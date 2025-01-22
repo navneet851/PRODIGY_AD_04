@@ -29,7 +29,7 @@ import com.android.ai.tictactoe.ui.theme.themeIcon
 
 @Composable
 fun PlayerPrefCheckbox(
-    modifier : Modifier = Modifier.size(100.dp),
+    modifier : Modifier = Modifier.size(80.dp),
     @DrawableRes image: Int,
     checked: Boolean = false,
     onCheckedChange: (Boolean) -> Unit
