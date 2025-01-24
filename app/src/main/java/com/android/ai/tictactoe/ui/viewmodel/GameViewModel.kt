@@ -56,5 +56,32 @@ class GameViewModel : ViewModel() {
         return false
     }
 
+    fun botMove(): Int {
+        val board = _board.value
+
+        // Take the center if available
+        if (board[4] == null) {
+            return 4
+        }
+
+        // Take a corner if available
+        val corners = listOf(0, 2, 6, 8)
+        for (corner in corners) {
+            if (board[corner] == null) {
+                return corner
+            }
+        }
+
+        // Take any available move
+        for (i in board.indices) {
+            if (board[i] == null) {
+                return i
+            }
+        }
+
+        // No moves left
+        return -1
+    }
+
 
 }

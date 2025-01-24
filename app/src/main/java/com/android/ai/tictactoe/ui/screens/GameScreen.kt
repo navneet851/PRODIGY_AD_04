@@ -21,6 +21,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -51,6 +52,7 @@ import com.android.ai.tictactoe.ui.components.GridBox
 import com.android.ai.tictactoe.ui.theme.themeBackground
 import com.android.ai.tictactoe.ui.theme.themeIcon
 import com.android.ai.tictactoe.ui.viewmodel.GameViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -71,7 +73,7 @@ fun GameScreen(navController: NavHostController, game: Game) {
     val gameMode by rememberSaveable {
         mutableStateOf(game.mode)
     }
-    var winningState by remember {
+    var winningState by rememberSaveable {
         mutableStateOf(false)
     }
     val coroutineScope = rememberCoroutineScope()
@@ -137,22 +139,59 @@ fun GameScreen(navController: NavHostController, game: Game) {
                         .border(1.dp, Color.LightGray)
                         .clickable {
                             coroutineScope.launch {
-                                if (board[it] == null) {
-                                    gameViewModel.updateBoard(
-                                        it,
-                                        if (playerTurn == "Cross") Cell(
-                                            "Cross",
-                                            R.drawable.x
-                                        ) else Cell("Circle", R.drawable.o)
-                                    )
-                                    playerTurn = if (playerTurn == "Cross") {
-                                        "Circle"
-                                    } else {
-                                        "Cross"
+                                if (gameMode == "Single"){
+                                    if (board[it] == null) {
+                                        gameViewModel.updateBoard(
+                                            it,
+                                            if (playerTurn == "Cross") Cell(
+                                                "Cross",
+                                                R.drawable.x
+                                            ) else Cell("Circle", R.drawable.o)
+                                        )
+                                        playerTurn = if (playerTurn == "Cross") {
+                                            "Circle"
+                                        } else {
+                                            "Cross"
+                                        }
+                                        playerTurnIndicator = !playerTurnIndicator
+                                        winningState = gameViewModel.checkWin()
+                                        delay(1000)
+                                        val botMove = gameViewModel.botMove()
+                                        gameViewModel.updateBoard(
+                                            botMove,
+                                            if (playerTurn == "Cross") Cell(
+                                                "Cross",
+                                                R.drawable.x
+                                            ) else Cell("Circle", R.drawable.o)
+                                        )
+                                        playerTurn = if (playerTurn == "Cross") {
+                                            "Circle"
+                                        } else {
+                                            "Cross"
+                                        }
+                                        playerTurnIndicator = !playerTurnIndicator
+                                        winningState = gameViewModel.checkWin()
                                     }
-                                    playerTurnIndicator = !playerTurnIndicator
-                                    winningState = gameViewModel.checkWin()
                                 }
+                                else{
+                                    if (board[it] == null) {
+                                        gameViewModel.updateBoard(
+                                            it,
+                                            if (playerTurn == "Cross") Cell(
+                                                "Cross",
+                                                R.drawable.x
+                                            ) else Cell("Circle", R.drawable.o)
+                                        )
+                                        playerTurn = if (playerTurn == "Cross") {
+                                            "Circle"
+                                        } else {
+                                            "Cross"
+                                        }
+                                        playerTurnIndicator = !playerTurnIndicator
+                                        winningState = gameViewModel.checkWin()
+                                    }
+                                }
+
                             }
 
 
@@ -189,7 +228,25 @@ fun GameScreen(navController: NavHostController, game: Game) {
 
             )
         }
+
+        Spacer(modifier = Modifier.padding(25.dp))
+        ElevatedButton(
+            onClick = {
+                gameViewModel.resetBoard()
+                playerTurn = game.side
+                playerTurnIndicator = true
+            }
+        ) {
+            Text("Reset")
+        }
+
     }
+
+
+
+
+
+
 
     if (winningState) {
         Dialog(
@@ -207,6 +264,7 @@ fun GameScreen(navController: NavHostController, game: Game) {
                     Text(
                         text = if (gameMode == "Single") "You Win!" else "Player 1 Win!",
                         fontSize = 17.sp,
+                        color = Color.White,
                         fontWeight = FontWeight.W500
 
                     )
@@ -214,6 +272,7 @@ fun GameScreen(navController: NavHostController, game: Game) {
                     Text(
                         text =  if (gameMode == "Single") "Bot Win!" else "Player 2 Win!",
                         fontSize = 17.sp,
+                        color = Color.White,
                         fontWeight = FontWeight.W500
 
                     )
