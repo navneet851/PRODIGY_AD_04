@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 
 data class Cell(
-    val color: Color,
-    @DrawableRes val player: Int
+    val side : String,
+    @DrawableRes val player: Int,
+    var color: Color = Color.Transparent
 )

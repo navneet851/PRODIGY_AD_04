@@ -41,7 +41,7 @@ import com.android.ai.tictactoe.ui.theme.themeIcon
 @Composable
 fun HomeScreen(navController: NavHostController) {
     var selectedMode by rememberSaveable {
-        mutableStateOf("Single")
+        mutableStateOf("Duo")
     }
     var selectedSide by rememberSaveable {
         mutableStateOf("Cross")
