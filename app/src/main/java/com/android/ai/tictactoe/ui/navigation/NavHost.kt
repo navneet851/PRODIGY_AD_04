@@ -5,6 +5,7 @@ import androidx.navigation.compose.rememberNavController
 import  androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.android.ai.tictactoe.data.model.Game
 import com.android.ai.tictactoe.ui.screens.GameScreen
 import com.android.ai.tictactoe.ui.screens.HomeScreen
 import kotlinx.serialization.Serializable
@@ -15,17 +16,12 @@ fun NavHost() {
 
     NavHost(navController, startDestination = "home"){
         composable("home"){
-            HomeScreen()
+            HomeScreen(navController)
         }
-        composable("game") {
+        composable<Game>{
             val game = it.toRoute<Game>()
-            GameScreen()
+            GameScreen(navController, game)
         }
     }
 }
 
-@Serializable
-data class Game(
-    val mode : String,
-    val side : String
-)

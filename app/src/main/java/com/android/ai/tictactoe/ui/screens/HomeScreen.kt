@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,18 +31,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.android.ai.tictactoe.R
+import com.android.ai.tictactoe.data.model.Game
 import com.android.ai.tictactoe.ui.components.PlayerPrefCheckbox
 import com.android.ai.tictactoe.ui.theme.themeIcon
 
 
-@Preview(showBackground = false)
 @Composable
-fun HomeScreen() {
-    var selectedMode by remember {
+fun HomeScreen(navController: NavHostController) {
+    var selectedMode by rememberSaveable {
         mutableStateOf("Single")
     }
-    var selectedSide by remember {
+    var selectedSide by rememberSaveable {
         mutableStateOf("Cross")
     }
 
@@ -104,7 +106,7 @@ fun HomeScreen() {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "Pic Your Side",
-            fontSize = 18.sp,
+            fontSize = 17.sp,
             fontWeight = FontWeight.W500,
             textAlign = TextAlign.Center
         )
@@ -115,6 +117,7 @@ fun HomeScreen() {
                 .fillMaxWidth()
         ) {
             PlayerPrefCheckbox(
+                modifier = Modifier.size(40.dp),
                 image = R.drawable.o,
                 checked = selectedSide == "Circle",
                 onCheckedChange = {
@@ -122,10 +125,7 @@ fun HomeScreen() {
                 }
             )
             PlayerPrefCheckbox(
-                modifier = Modifier
-                    .size(80.dp)
-                    .padding(20.dp)
-                ,
+                modifier = Modifier.size(40.dp),
                 image = R.drawable.x,
                 checked = selectedSide == "Cross",
                 onCheckedChange = {
@@ -136,7 +136,7 @@ fun HomeScreen() {
 
         Button(
             onClick = {
-
+                navController.navigate(Game(selectedMode, selectedSide))
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = themeIcon

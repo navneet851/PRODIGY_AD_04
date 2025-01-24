@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ import com.android.ai.tictactoe.ui.theme.themeIcon
 
 @Composable
 fun PlayerPrefCheckbox(
-    modifier : Modifier = Modifier.size(80.dp),
+    modifier : Modifier = Modifier.size(70.dp),
     @DrawableRes image: Int,
     checked: Boolean = false,
     onCheckedChange: (Boolean) -> Unit
@@ -41,7 +42,8 @@ fun PlayerPrefCheckbox(
         Image(
             modifier = modifier,
             painter = painterResource(image),
-            contentDescription = "Solo"
+            contentDescription = "Solo",
+            contentScale = ContentScale.Fit
         )
         Checkbox(
             modifier = Modifier
