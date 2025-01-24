@@ -15,4 +15,9 @@
 </p>
 
 
-[//]: # (<a href="https://drive.google.com/file/d/10Y2T4wJWKKYJZtM9XWoOvBc14Njj0KlT/view?usp=sharing" ><img src="https://img.icons8.com/color/48/000000/download" alt="download" width="40" height="40"/> Download Game</a>)
+<a href="https://drive.google.com/file/d/10Y2T4wJWKKYJZtM9XWoOvBc14Njj0KlT/view?usp=sharing" ><img src="https://img.icons8.com/color/48/000000/download" alt="download" width="50" height="50"/>  Download Game</a>
+
+
+
+
+
